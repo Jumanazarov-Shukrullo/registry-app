@@ -21,7 +21,7 @@ Registry App is a web application built with Django that allows users to manage 
   ```sh
   python3 manage.py migrate
   ```
-> :warning: **If you don't have chrome browser and chromedriver**: Install it here [here](google.com).
+> :warning: **If you don't have chrome browser and chromedriver**: Install it here [here](https://github.com/Jumanazarov-Shukrullo/registry-app/edit/main/install.sh).
 
 4. **Start the Development Server**:
   ```sh
