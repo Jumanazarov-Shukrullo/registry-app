@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles can be added here */
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>All Items</h1>
+
+        <!-- Search form -->
+        <form method="GET" action="{% url 'index' %}" class="mb-3">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..." value="{{ query }}">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-outline-secondary">Search</button>
+                </div>
+            </div>
+        </form>
+        {% if query %}
+            <p>Search results for "{{ query }}":</p>
+            <p>Total rows rendered: {{ num_rows_rendered }}</p>
+        {% endif %}
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fullname</th>
+                    <th>Abbreviated Name</th>
+                    <th>Licence Number</th>
+                    <th>INN</th>
+                    <th>Date of Registration</th>
+                    <th>Address</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Termination Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in page_obj %}
+                <tr>
+                    <td>{{ item.fullname }}</td>
+                    <td>{{ item.abbreviated_name }}</td>
+                    <td>{{ item.licence_number }}</td>
+                    <td>{{ item.inn }}</td>
+                    <td>{{ item.date_of_registration }}</td>
+                    <td>{{ item.address }}</td>
+                    <td>{{ item.deadline }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>{{ item.termination_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9">No items found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination links -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">previous</a></li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}">next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}">last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Include Bootstrap JS (optional) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
